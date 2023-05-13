@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">Login</string>
+    <string name="please_enter_your_login_credentials_to_proceed">Please enter your login credentials to proceed</string>
+    <string name="username">User Name</string>
+    <string name="loginsubmit">Login</string>
+</resources>

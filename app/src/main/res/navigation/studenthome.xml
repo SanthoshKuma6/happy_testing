@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/studenthome"
+    app:startDestination="@id/studentDashboard">
+
+    <fragment
+        android:id="@+id/studentDashboard"
+        android:name="com.edu.happytesting.fragment.StudentDashboard"
+        android:label="Test"
+        tools:layout="@layout/fragment_student_dashboard" />
+    <activity
+        android:id="@+id/tablayoutActivity"
+        android:name="com.edu.happytesting.activity.TablayoutActivity"
+        android:label="activity_tablayout"
+        tools:layout="@layout/activity_tablayout" />
+</navigation>
