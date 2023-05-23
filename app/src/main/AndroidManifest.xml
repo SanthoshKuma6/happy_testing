@@ -17,12 +17,6 @@
         android:theme="@style/Theme.DayTheme"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".NoDataActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.TablayoutActivity"
             android:exported="false" />
         <activity

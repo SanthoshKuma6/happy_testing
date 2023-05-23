@@ -2,25 +2,16 @@ package com.edu.happytesting.activity
 
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
-import android.graphics.Paint
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.edu.happytesting.R
 import com.edu.happytesting.api.Response
 import com.edu.happytesting.databinding.ActivityLoginBinding
 import com.edu.happytesting.dataclass.StudentData

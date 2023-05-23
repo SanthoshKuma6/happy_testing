@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ImageButton
         android:padding="23dp"
         android:id="@+id/ibSmall"
@@ -38,18 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/ibMedium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/extralarge"/>
+       app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageButton
-        android:padding="20dp"
-        android:id="@+id/extralarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="image"
-        android:src="@drawable/shape_brush_extra_large"
-        app:layout_constraintTop_toBottomOf="@id/iblarge"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

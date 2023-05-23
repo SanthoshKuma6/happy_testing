@@ -3,15 +3,20 @@ package com.edu.happytesting.drawing
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
+import android.view.MotionEvent.TOOL_TYPE_STYLUS
 import android.view.View
 import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
-class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
+class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
     private lateinit var drawPaint: Paint
     private lateinit var drawPath: CustomPath
     private var currentColor: Int = Color.BLACK
@@ -25,15 +30,16 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
     private val paths = ArrayList<CustomPath>()
     private val undoPaths = ArrayList<CustomPath>()
 
-    private var lastX = 0f
-    private var lastY = 0f
+
     init {
         setUpDrawing()
     }
+
     private var bitmapCallback: ((bitmap: Bitmap) -> Unit)? = null
     fun setBitmapCallback(callback: ((bitmap: Bitmap) -> Unit)?) {
         bitmapCallback = callback
     }
+
     //! bta rahe k style kya ho ga draw kerne ka bus with using drawPaint variable.
     private fun setUpDrawing() {
         drawPaint = Paint()
@@ -67,6 +73,7 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
                 drawPaint.strokeWidth = path.eraserThickness
             }
             canvas?.drawPath(path, drawPaint)
+
         }
 
         drawPaint.strokeWidth = drawPath.brushThickness
@@ -84,8 +91,8 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
         val touchX = event?.x
         val touchY = event?.y
 
-        when(event?.action) {
-            MotionEvent.ACTION_DOWN , MotionEvent.ACTION_POINTER_DOWN -> {
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                 if (event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS || event.getToolType(0) == MotionEvent.TOOL_TYPE_ERASER) {
                     // The touch event was a stylus touch
                     // Do something here
@@ -94,9 +101,6 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
                     drawPath.xfermode = currentXfermode
                     drawPath.eraserThickness = currentEraserSize
                     drawPath.reset()
-                    lastX = event.x
-                    lastY = event.y
-                    drawPath.moveTo(lastX, lastY)
                     if (touchX != null) {
                         if (touchY != null) {
                             drawPath.moveTo(touchX, touchY)
@@ -104,7 +108,7 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
                     }
                     return true
                 } else {
-                   return false
+                    return false
                     // The touch event was a hand touch
                     // Do something here
 
@@ -113,9 +117,6 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
             }
 
             MotionEvent.ACTION_MOVE -> {
-                lastX = event.x
-                lastY = event.y
-                drawPath.lineTo(lastX, lastY)
                 if (touchX != null) {
                     if (touchY != null) {
                         drawPath.lineTo(touchX, touchY)
@@ -124,10 +125,11 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
 
 
             }
-            MotionEvent.ACTION_UP ,MotionEvent.ACTION_POINTER_UP-> {
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
                 paths.add(drawPath)
                 undoPaths.clear()
-                drawPath = CustomPath(currentColor, currentBrushSize, currentXfermode, currentEraserSize)
+                drawPath =
+                    CustomPath(currentColor, currentBrushSize, currentXfermode, currentEraserSize)
 
                 val lifecycleScope = CoroutineScope(Dispatchers.IO)
                 lifecycleScope.launch {
@@ -142,29 +144,22 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
         return true
     }
 
-    // Get the last position where you drew on the Canvas
-    val lastPoint: PointF
-        get() = PointF(lastX, lastY)
-
-
 
     //! function that sets new size
     fun setSizeForBrush(newSize: Float) {
         currentXfermode = null
-        currentBrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, resources.displayMetrics)
+        currentBrushSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            newSize,
+            resources.displayMetrics
+        )
     }
-    fun setBrushColor(color: Int){
+
+    fun setBrushColor(color: Int) {
         currentColor = color
         drawPaint!!.color = color
     }
 
-
-    //! function that set new color
-    fun setColor(newColor: String) {
-        currentXfermode = null
-        val color = Color.parseColor(newColor)
-        this.currentColor = color
-    }
 
     //! on Eraser select, sets paint tool to eraser
     fun onEraserSelect(size: Float) {
@@ -172,13 +167,6 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
         currentXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
-    //! on clear Screen Button, clears the drawing and sets pen tool.
-    fun onClearScreen() {
-        paths.clear()
-        undoPaths.clear()
-        currentXfermode = null
-        invalidate()
-    }
 
     //! undo ker raha last drawing
     fun onClickUndo() {
@@ -199,7 +187,12 @@ class DrawingView(context: Context, attr: AttributeSet) : View(context, attr) {
 
     //! custom path class that has color and thickness properties which we are going to use to set
     // paint properties
-    internal inner class CustomPath(var color: Int, var brushThickness: Float, var xfermode: PorterDuffXfermode?, var eraserThickness: Float) : Path() {
+    internal inner class CustomPath(
+        var color: Int,
+        var brushThickness: Float,
+        var xfermode: PorterDuffXfermode?,
+        var eraserThickness: Float
+    ) : Path() {
 
     }
 

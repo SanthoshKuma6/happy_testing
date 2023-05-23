@@ -21,8 +21,8 @@ class QuestionListAdapter(
             binding.count.text = data.numberOfQuestions.toString()
             binding.statusbtn.text = data.testStatus
 
-            if (data.testStatus == "Pending")
-//            if (data.testStatus == "Completed")
+//            if (data.testStatus == "Pending")
+            if (data.testStatus == "Completed")
             {
                 binding.statusbtn.setBackgroundColor(Color.parseColor("#FFA500"))
 

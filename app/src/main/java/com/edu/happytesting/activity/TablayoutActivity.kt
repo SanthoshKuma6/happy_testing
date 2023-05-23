@@ -31,7 +31,6 @@ import com.edu.happytesting.databinding.ActivityTablayoutBinding
 import com.edu.happytesting.dataclass.ObjectiveAnswer
 import com.edu.happytesting.dataclass.QuestionList
 import com.edu.happytesting.dataclass.SubjectiveAnswer
-import com.edu.happytesting.drawing.DrawingView
 import com.edu.happytesting.fragment.Question
 import com.edu.happytesting.preference.HappyPreference
 import com.edu.happytesting.utils.CountDownTimerPausable
@@ -95,6 +94,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         supportActionBar?.hide()
         setContentView(tablayoutBinding.root)
         happyViewModel.questionListResponse.observe(this, questionListObserver)
+
         happyViewModel.objectivesAnswer.observe(this, objetiveanswerObserver)
         happyViewModel.subjectiveAnswer.observe(this, subjectiveAnswerObserver)
 
@@ -102,10 +102,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         subjectId = intent.getStringExtra("subjectId").toString()
         testDuration = intent.getStringExtra("duration").toString()
         numberOfQuestions = intent.getIntExtra("numberOfQuestions", 0)
-
-
-
-
 
         myReceiver= MyReceiver()
         apiCallQuestionList()
@@ -612,6 +608,5 @@ interface OnTabSelect {
     fun onSelectAns(position: Int)
 
 }
-
 
 

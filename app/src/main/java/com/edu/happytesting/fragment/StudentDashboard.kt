@@ -71,6 +71,8 @@ class StudentDashboard : Fragment() {
     }
 
 
+
+
     @SuppressLint("SetTextI18n")
     private val refreshingObserver =
         Observer<Response<List<RefresigExamDetails.RefresigExamDetailsItem>>> {
@@ -93,23 +95,24 @@ class StudentDashboard : Fragment() {
                             it.data as ArrayList<RefresigExamDetails.RefresigExamDetailsItem>,
                             ::pendingScreen
                         )
-
                     studentDashboard.refreshlayout.setOnRefreshListener {
                         Handler()
                             .postDelayed({
                                 studentDashboard.refreshlayout.isRefreshing = false
                                 Collections.shuffle(it.data, Random(System.currentTimeMillis()))
+                                apiCall()
+                                adapter = QuestionListAdapter(it.data, ::pendingScreen)
                                 adapter?.notifyDataSetChanged()
                             }, 2000)
                     }
-
                     studentDashboard.recyclerview.adapter = adapter
                     if (it.data.isEmpty()) {
-
                         studentDashboard.noData.visibility=View.VISIBLE
                     }else{
                         studentDashboard.noData.visibility=View.GONE
                     }
+
+
                 }
                 is Response.Error -> {
                     showLog(it.errorMessage!!)
@@ -117,6 +120,20 @@ class StudentDashboard : Fragment() {
                 }
             }
         }
+    private fun apiCall(){
+        val data = HappyPreference(requireContext()).getUserDetails()
+        lifecycleScope.launch {
+            data["class_id"]?.let {
+                data["studentId"]?.let { it1 ->
+                    happyViewModel.getRefreshingData(
+                        it,
+                        it1
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun pendingScreen(questionListItem: RefresigExamDetails.RefresigExamDetailsItem) {
         val testId = questionListItem.testId

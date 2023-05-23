@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/flDrawingContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:padding="1dp"
-        app:layout_constraintBottom_toTopOf="@id/horizontalScrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <com.edu.happytesting.drawing.DrawingView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+<!--    <FrameLayout-->
+<!--        android:id="@+id/flDrawingContainer"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:padding="1dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/horizontalScrollView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        <com.edu.happytesting.drawing.DrawingView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+<!--    </FrameLayout>-->
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"

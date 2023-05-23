@@ -24,6 +24,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+//            buildConfigField("String", "ACCESS_KEY", "74585654566556")
+//            buildConfigField("String", "APi_DOMAIN", "+ +ZZrH1qOIUCZ+8lfuc5VPKjS8hZisKQ8eeNL6b8DwzU=")
+
         }
     }
     compileOptions {

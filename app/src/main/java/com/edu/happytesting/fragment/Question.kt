@@ -27,6 +27,8 @@ class Question : Fragment() {
 
     }
 
+
+
     private val questionListObserver = Observer<Response<List<QuestionList.QuestionListItem>>> {
         when (it) {
             is Response.Success -> {
