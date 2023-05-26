@@ -3,15 +3,12 @@ package com.edu.happytestin
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.text.Html.ImageGetter
 import android.util.Log
 import android.view.*
 import android.view.View.OnTouchListener
 import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edu.happytesting.R
@@ -23,6 +20,7 @@ import com.github.dhaval2404.colorpicker.model.ColorShape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.nio.file.attribute.AclEntry.newBuilder
 
 
 class ExamlistAdapter(
@@ -45,6 +43,10 @@ class ExamlistAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun setView(examList: QuestionList.QuestionListItem) {
             adapterQuestions.question.text = examList.name
+            adapterQuestions.drawing.setSizeForBrush(3.toFloat())
+            adapterQuestions.drawing.setBrushColor(Color.BLACK)
+
+
             value?.let { onclick1(it, position) }
             if (examList.type == 1) {
                 adapterQuestions.drawingcanvaparent.visibility = View.GONE
@@ -57,14 +59,14 @@ class ExamlistAdapter(
             } else {
                 adapterQuestions.openchoicequestions.visibility = View.GONE
                 adapterQuestions.drawingcanvaparent.visibility = View.VISIBLE
-                adapterQuestions.drawing.setSizeForBrush(2.toFloat())
+                adapterQuestions.drawing.setSizeForBrush(3.toFloat())
                 adapterQuestions.drawing.setBrushColor(Color.BLACK)
                 try {
                     value?.let {
                         examList.type?.let { it1 ->
                             onclick1(
                                 it,
-                                position,
+                                position
                             )
                         }
                     }
@@ -107,6 +109,8 @@ class ExamlistAdapter(
                 if (adapterQuestions.question1.isClickable) {
                     onTabSelect.onSelectAns(0)
                 }
+
+
             }
             adapterQuestions.question2.setOnClickListener {
                 if (adapterQuestions.question2.isClickable) {
@@ -141,16 +145,12 @@ class ExamlistAdapter(
 
             adapterQuestions.erase.setOnClickListener {
                 val brushDialogue = Dialog(context)
+
                 brushDialogue.setContentView(R.layout.dialogue_eraser_size)
                 brushDialogue.setTitle("Choose Eraser Size: ")
                 brushDialogue.findViewById<ImageButton>(R.id.ersersmall)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(10.toFloat())
-                        brushDialogue.findViewById<ImageButton>(R.id.ersersmall).setBackgroundColor(Color.parseColor("#FFA500"))
-                        brushDialogue.findViewById<ImageButton>(R.id.ersersmall).backgroundTintList=ColorStateList.valueOf(Color.parseColor("#FFA500"))
-
-
-
                         brushDialogue.dismiss()
                     }
                 brushDialogue.findViewById<ImageButton>(R.id.erasermedium)

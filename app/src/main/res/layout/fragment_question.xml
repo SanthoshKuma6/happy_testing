@@ -50,6 +50,7 @@
                     android:id="@+id/drawingcanvaparent"
                     android:visibility="visible">
                 <LinearLayout
+                    android:id="@+id/contrainlayout"
                     android:layout_width="match_parent"
                     android:layout_height="1000dp"
                     android:orientation="vertical">
@@ -80,52 +81,109 @@
                     </com.edu.happytesting.drawing.CustomScrollView>
 
                 </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-                <LinearLayout
-                    android:id="@+id/drawingbuttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                        android:id="@+id/parentconstain">
 
-                    <ImageButton
-                        android:id="@+id/brushcolor"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/pencil"
-                        android:contentDescription="TODO" />
 
-                    <ImageButton
-                        android:id="@+id/erase"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/eraser"
-                        android:contentDescription="TODO" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/drawingconstrain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageButton
-                        android:id="@+id/multicolor"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/color"
-                        android:contentDescription="TODO" />
+                            <LinearLayout
+                                android:id="@+id/drawinglinear"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent">
 
-                    <ImageButton
-                        android:id="@+id/btn_undo"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/undo_select"
-                        android:contentDescription="TODO" />
 
-                    <ImageButton
-                        android:id="@+id/btn_redo"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/redo"
-                        android:contentDescription="TODO" />
+                                <ImageButton
+                                    android:id="@+id/brushcolor"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/pencil"
+                                    app:layout_constraintEnd_toStartOf="@id/erase"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/erase"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/eraser"
+                                    app:layout_constraintEnd_toStartOf="@id/multicolor"
+                                    app:layout_constraintStart_toEndOf="@id/brushcolor"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/multicolor"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/color"
+                                    app:layout_constraintEnd_toStartOf="@id/btn_undo"
+                                    app:layout_constraintStart_toEndOf="@id/erase"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/btn_undo"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/undo_select"
+                                    app:layout_constraintEnd_toStartOf="@id/btn_redo"
+                                    app:layout_constraintStart_toEndOf="@id/multicolor"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/btn_redo"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:contentDescription="TODO"
+                                    android:src="@drawable/redo"
+                                    app:layout_constraintStart_toEndOf="@id/btn_undo"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/swipeup"
+                            android:text="Swipe up"
+                            android:textSize="19dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/tabcolor"
+                            app:layout_constraintEnd_toStartOf="@id/scroll"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/scroll"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/dwonarrow"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginEnd="10dp"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
-                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/openchoicequestions"
                     android:layout_width="match_parent"

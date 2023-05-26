@@ -19,7 +19,6 @@ class HappyViewModel : ViewModel() {
     //initialize the live data in viewmodel and will be accessed from activity
     val loginResponseLiveData by lazy { loginRepository.loginLiveData }
 
-
     //error handler liveData
     val errorHandlerLiveData: MutableLiveData<String> = MutableLiveData()
 

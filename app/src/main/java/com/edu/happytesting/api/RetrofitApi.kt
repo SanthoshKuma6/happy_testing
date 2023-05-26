@@ -1,9 +1,7 @@
 package com.edu.happytesting.api
 
-import com.edu.happytesting.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +12,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitApi {
 
     private var retrofit: Retrofit? = null
-
     /**
      * OkHttpClient used to specify the timeout for the api request and to add the
      * interceptor.
@@ -43,7 +40,6 @@ object RetrofitApi {
     private var gson: Gson? = GsonBuilder()
         .setLenient()
         .create()
-
     fun retrofitInstance(): Retrofit =
         retrofit
             ?: Retrofit.Builder()

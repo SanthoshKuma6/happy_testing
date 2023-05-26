@@ -16,34 +16,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class Question : Fragment() {
     private lateinit var question: FragmentQuestionBinding
-    private val happyViewModel: HappyViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         question = FragmentQuestionBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        happyViewModel.questionListResponse.observe(requireActivity(), questionListObserver)
-
 
     }
-
-
-
-    private val questionListObserver = Observer<Response<List<QuestionList.QuestionListItem>>> {
-        when (it) {
-            is Response.Success -> {
-                for (i in it.data!!) {
-                    question.question.text = i.name
-
-                }
-
-            }
-            is Response.Error -> {}
-            is Response.Loading -> {}
-        }
-    }
-
-
 
 
 }

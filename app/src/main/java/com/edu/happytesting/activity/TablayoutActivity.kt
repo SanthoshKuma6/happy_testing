@@ -15,9 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -41,10 +43,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 
 
@@ -54,7 +59,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
     private val questionList: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private val questionListTemp: ArrayList<QuestionList.QuestionListItem> = ArrayList()
 
-    private val objectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
+     var objectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private val subjectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private lateinit var myReceiver: MyReceiver
 
@@ -102,34 +107,47 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         subjectId = intent.getStringExtra("subjectId").toString()
         testDuration = intent.getStringExtra("duration").toString()
         numberOfQuestions = intent.getIntExtra("numberOfQuestions", 0)
-
-        myReceiver= MyReceiver()
+        myReceiver = MyReceiver()
         apiCallQuestionList()
-
         tablayoutBinding.submit.setOnClickListener {
             leftAnswers()
-
         }
-
-
     }
-
     private val objetiveanswerObserver = Observer<Response<ObjectiveAnswer>> {
         when (it) {
-            is Response.Success -> {}
-            is Response.Loading -> {}
+            is Response.Success -> {
+                finalResponse()
+            }
+            is Response.Loading -> {
+                if (it.showLoader == true) {
+                    tablayoutBinding.progress.visibility = View.VISIBLE
+                } else {
+                    tablayoutBinding.progress.visibility = View.GONE
+                }
+            }
             is Response.Error -> {
-                showToast("error" + it.errorMessage)
+                showToast(" "+it.errorMessage)
+
             }
         }
     }
 
     private val subjectiveAnswerObserver = Observer<Response<SubjectiveAnswer>> {
         when (it) {
-            is Response.Success -> {}
-            is Response.Loading -> {}
+            is Response.Success -> {
+                finalResponse()
+
+            }
+            is Response.Loading -> {
+                if (it.showLoader == true) {
+                    tablayoutBinding.progress.visibility = View.VISIBLE
+                } else {
+                    tablayoutBinding.progress.visibility = View.GONE
+                }
+
+            }
+
             is Response.Error -> {
-                showToast("error" + it.errorMessage)
             }
         }
     }
@@ -166,13 +184,11 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                 )
                 tablayoutBinding.viewPager.adapter = examlistAdapter
             }
+
             is Response.Error -> {}
             is Response.Loading -> {
                 if (it.showLoader == true) {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        tablayoutBinding.progress.visibility = View.VISIBLE
-
-                    },2000)
+                    tablayoutBinding.progress.visibility = View.VISIBLE
 
                 } else {
                     tablayoutBinding.progress.visibility = View.GONE
@@ -220,7 +236,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                 subjectiveAnswer[position].chosenAnswer,
                 encoded,
             )
-        Log.d("TAGencoded", "subjectiveAnswer: $subjectiveAnswer")
 
 
     }
@@ -263,7 +278,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         val viewPager = tablayoutBinding.viewPager
         val tabLayout = tablayoutBinding.tabLayout
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        viewPager.isUserInputEnabled=false
+//        viewPager.isUserInputEnabled=false
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             for (i in 0 until questionList.size) {
@@ -274,17 +289,20 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         }.attach()
         timerCreate()
     }
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         // Check if the event was generated by a pencil or hand touch
         val toolType = event?.getToolType(0)
         when (toolType) {
             MotionEvent.TOOL_TYPE_STYLUS -> {
-//                tablayoutBinding.viewPager.isUserInputEnabled=false
+                tablayoutBinding.viewPager.isUserInputEnabled = false
             }
+
             MotionEvent.TOOL_TYPE_FINGER -> {
-//                tablayoutBinding.viewPager.isUserInputEnabled=false
+                tablayoutBinding.viewPager.isUserInputEnabled = true
 
             }
+
             else -> {}
         }
         // Return false to allow the ViewPager2 to handle the event
@@ -353,30 +371,43 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
 
     }
 
+
+    private fun finalResponse(){
+        this.let {
+            MaterialAlertDialogBuilder(this)
+            val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .create()
+            val view = layoutInflater.inflate(R.layout.custom_alert_layout, null)
+            builder.setView(view)
+            val button = view.findViewById<TextView>(R.id.okbutton)
+            button.setOnClickListener {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+            }
+            builder.setCanceledOnTouchOutside(false)
+            builder.show()
+        }
+
+    }
+
+
+    private fun answerSubmission() {
+        MaterialAlertDialogBuilder(this)
+            .setCancelable(false)
+            .setMessage(resources.getString(R.string.are_you_sure_submit))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                submit()
+                dialog.dismiss()
+
+            }.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+
+            }
+            .show()
+    }
+
     private fun submit() {
         if (idType == 2) {
-//            try {
-////                val writBitmap = examlistAdapter?.getBitmapFromView(tablayoutBinding.viewPager)
-//                val byteArrayOutputStream = ByteArrayOutputStream()
-//                writingBitmap!!.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-//                val byteArray = byteArrayOutputStream.toByteArray()
-//                val encoded = Base64.encodeToString(byteArray, Base64.DEFAULT)
-//                subjectiveAnswer[newItem] =
-//                    QuestionList.QuestionListItem(
-//                        subjectiveAnswer[newItem].id,
-//                        subjectiveAnswer[newItem].mark,
-//                        subjectiveAnswer[newItem].name,
-//                        subjectiveAnswer[newItem].options,
-//                        subjectiveAnswer[newItem].type,
-//                        correction!!,
-//                        subjectiveAnswer[newItem].chosenAnswer,
-//                        encoded,
-//                    )
-//                Log.d("TAGencoded", "submit: $encoded")
-//            } catch (e: NullPointerException) {
-//                e.printStackTrace()
-//            }
-
             for (i in objectiveAnswer) {
                 if (i.type != 2) {
                     val data1 = HappyPreference(this).getUserDetails()
@@ -392,13 +423,10 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                     }
                     lifecycleScope.launch {
                         happyViewModel.putObjectiveAnswer(jsonObject)
-
                     }
-
                 } else {
                     for (i in subjectiveAnswer) {
                         if (i.type == 2) {
-
                             val data1 = HappyPreference(this).getUserDetails()
                             val studentWritingDetails = JsonObject().apply {
                                 addProperty("studentId", data1["studentId"])
@@ -420,11 +448,12 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                     }
                 }
             }
-
         }
+        val array=JSONArray()
         for (i in objectiveAnswer) {
             if (i.type != 2) {
                 val data1 = HappyPreference(this).getUserDetails()
+
                 val jsonObject = JsonObject().apply {
                     addProperty("studentId", data1["studentId"])
                     addProperty("class_id", data1["class_id"])
@@ -435,6 +464,10 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                     addProperty("isAnswered", i.isAnswered)
                     addProperty("chosenAnswer", i.chosenAnswer)
                 }
+//                array.put(jsonObject)
+//                val jsonObject1=JSONObject()
+//                jsonObject1.put("data",array)
+
                 lifecycleScope.launch {
                     happyViewModel.putObjectiveAnswer(jsonObject)
 
@@ -465,32 +498,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
             }
 
         }
-        MaterialAlertDialogBuilder(this)
-            .setCancelable(false)
-            .setMessage(resources.getString(R.string.are_you_sure_submit))
-            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                dialog.dismiss()
-                this.let {
-                    MaterialAlertDialogBuilder(this)
-                    val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .create()
-                    val view = layoutInflater.inflate(R.layout.custom_alert_layout, null)
-                    builder.setView(view)
-                    val button = view.findViewById<TextView>(R.id.okbutton)
-                    button.setOnClickListener {
-                        val intent = Intent(applicationContext, MainActivity::class.java)
-                        startActivity(intent)
-                    }
-                    builder.setCanceledOnTouchOutside(false)
-                    builder.show()
-
-                }
-
-            }.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
-                dialog.dismiss()
-
-            }
-            .show()
 
     }
 
@@ -508,7 +515,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
             if (j.type == 2) {
                 if (!j.isAnswered) {
                     sCount++
-                    Log.d("TAGsCount", "leftAnswers: $sCount")
 
                 }
             }
@@ -521,7 +527,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
             .setMessage("You have $count questions left to attend, Submit Anyway?")
             .setPositiveButton(resources.getString(R.string.submit)) { dialog, _ ->
                 dialog.dismiss()
-                submit()
+                answerSubmission()
 
             }.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()

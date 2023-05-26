@@ -10,19 +10,34 @@
         android:layout_margin="25dp"
         android:orientation="vertical">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/image_onboarding"
+<!--        <com.airbnb.lottie.LottieAnimationView-->
+<!--            android:id="@+id/image_onboarding"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:lottie_autoPlay="true"-->
+<!--            app:lottie_loop="true"-->
+<!--            app:lottie_rawRes="@raw/nointernetconnection" />-->
+
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@drawable/nointernet"/>
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:scaleType="centerCrop"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/nointernetconnection" />
+            android:text="Ooops! "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
 
         <TextView
             android:layout_marginTop="10dp"
@@ -32,6 +47,12 @@
             android:text="No Internet Connection"
             android:textColor="@color/black"
             android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Please connect the internet and try again."
+           />
 
         <androidx.appcompat.widget.AppCompatButton
 
@@ -40,6 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/tabcolor"
+            android:textColor="@color/white"
             android:text="Retry"/>
 
 
