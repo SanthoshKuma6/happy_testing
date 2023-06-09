@@ -144,7 +144,6 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
         return true
     }
 
-
     //! function that sets new size
     fun setSizeForBrush(newSize: Float) {
         currentXfermode = null
