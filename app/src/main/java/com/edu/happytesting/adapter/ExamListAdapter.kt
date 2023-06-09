@@ -143,25 +143,25 @@ class ExamListAdapter(
                 val brushDialogue = Dialog(context)
                 brushDialogue.setContentView(R.layout.dialogue_eraser_size)
                 brushDialogue.setTitle("Choose Eraser Size: ")
-                brushDialogue.findViewById<ImageButton>(R.id.ersersmall)
+                brushDialogue.findViewById<ImageButton>(R.id.eraserSmall)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(10.toFloat())
                         brushDialogue.dismiss()
                     }
-                brushDialogue.findViewById<ImageButton>(R.id.erasermedium)
+                brushDialogue.findViewById<ImageButton>(R.id.eraserMedium)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(25.toFloat())
 
                         brushDialogue.dismiss()
                     }
-                brushDialogue.findViewById<ImageButton>(R.id.eraserlarge)
+                brushDialogue.findViewById<ImageButton>(R.id.eraserLarge)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(40.toFloat())
 
                         brushDialogue.dismiss()
                     }
 
-                brushDialogue.findViewById<ImageButton>(R.id.eraserExtralarge)
+                brushDialogue.findViewById<ImageButton>(R.id.eraserExtraLarge)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(70.toFloat())
 
@@ -190,7 +190,7 @@ class ExamListAdapter(
                         adapterQuestions.drawing.setBrushColor(Color.BLACK)
                         brushDialogue.dismiss()
                     }
-                brushDialogue.findViewById<ImageButton>(R.id.iblarge)
+                brushDialogue.findViewById<ImageButton>(R.id.ibLarge)
                     .setOnClickListener {
                         adapterQuestions.drawing.setSizeForBrush(5.toFloat())
                         adapterQuestions.drawing.setBrushColor(Color.BLACK)

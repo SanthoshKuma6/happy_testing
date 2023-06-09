@@ -7,48 +7,48 @@
 
     <ImageButton
         android:padding="23dp"
-        android:id="@+id/ersersmall"
+        android:id="@+id/eraserSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="image"
+        android:contentDescription="@string/size_10"
         android:src="@drawable/shape_brush_small"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/erasermedium"/>
+        app:layout_constraintBottom_toTopOf="@+id/eraserMedium"/>
 
     <ImageButton
         android:padding="20dp"
-        android:id="@+id/erasermedium"
+        android:id="@+id/eraserMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="image"
+        android:contentDescription="@string/size_25"
         android:src="@drawable/shape_eraser_medium"
-        app:layout_constraintTop_toBottomOf="@id/ersersmall"
+        app:layout_constraintTop_toBottomOf="@id/eraserSmall"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/eraserlarge"/>
+        app:layout_constraintBottom_toTopOf="@+id/eraserLarge"/>
 
     <ImageButton
         android:padding="20dp"
-        android:id="@+id/eraserlarge"
+        android:id="@+id/eraserLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="image"
+        android:contentDescription="@string/size_40"
         android:src="@drawable/shape_eraser_large"
-        app:layout_constraintTop_toBottomOf="@id/erasermedium"
+        app:layout_constraintTop_toBottomOf="@id/eraserMedium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/eraserExtralarge"/>
+        app:layout_constraintBottom_toBottomOf="@id/eraserExtraLarge"/>
 
     <ImageButton
         android:padding="20dp"
-        android:id="@+id/eraserExtralarge"
+        android:id="@+id/eraserExtraLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="image"
+        android:contentDescription="@string/size_70"
         android:src="@drawable/shape_brush_extra_large"
-        app:layout_constraintTop_toBottomOf="@id/eraserlarge"
+        app:layout_constraintTop_toBottomOf="@id/eraserLarge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

@@ -20,4 +20,11 @@
     <string name="pencil_todo">Pencil</string>
     <string name="undo_button">Undo Button</string>
     <string name="redo_button">Redo button</string>
+    <string name="size_3">Size 3</string>
+    <string name="size_4">Size 4</string>
+    <string name="size_5">Size 5</string>
+    <string name="size_10">Size 10</string>
+    <string name="size_40">Size 40</string>
+    <string name="size_70">Size 70</string>
+    <string name="size_25">Size 25</string>
 </resources>
