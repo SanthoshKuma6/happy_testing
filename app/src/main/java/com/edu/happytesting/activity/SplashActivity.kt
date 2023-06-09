@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -23,14 +22,13 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(splashScreen.root)
-//        requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         supportActionBar?.hide()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             )
-        val backgroundImage: TextView = splashScreen.slideleft
+        val backgroundImage: TextView = splashScreen.slideLeft
         val slideAnimation = AnimationUtils.loadAnimation(this, R.anim.image_slider)
         backgroundImage.startAnimation(slideAnimation)
         login()

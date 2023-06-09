@@ -60,7 +60,7 @@ class HappyRepository {
         }
     }
 
-    val refreshingData = MutableLiveData<Response<List<RefresigExamDetails.RefresigExamDetailsItem>>>()
+    val refreshingData = MutableLiveData<Response<List<RefreshingExamDetails.RefreshingExamDetailsItem>>>()
 
     suspend fun getRefreshingData(classId: String, studentId: String) {
         if (NetworkUtils.isInternetAvailable(context = context)){

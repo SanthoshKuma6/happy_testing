@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
-
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:id="@+id/parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/titleconstrain"
+        android:id="@+id/titleConstrain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <ImageView
             android:layout_width="match_parent"
@@ -23,22 +25,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/srmimage_todo">
-
-        </ImageView>
+            android:contentDescription="@string/srmimage_todo"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/logoconstrain"
+        android:id="@+id/logoConstrain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleconstrain"
+        app:layout_constraintTop_toBottomOf="@id/titleConstrain"
         app:layout_constraintVertical_bias="0.5">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/srmimg"
+            android:id="@+id/srmImg"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:src="@drawable/logo"
@@ -48,12 +47,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loginunderline"
+        android:id="@+id/loginUnderline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoconstrain">
+        app:layout_constraintTop_toBottomOf="@id/logoConstrain">
         <TextView
             android:id="@+id/login"
             android:layout_width="wrap_content"
@@ -64,8 +63,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view"
-            />
+            app:layout_constraintBottom_toTopOf="@id/view" />
 
         <View
             android:id="@+id/view"
@@ -85,11 +83,10 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginunderline">
-
+        app:layout_constraintTop_toBottomOf="@id/loginUnderline">
 
         <TextView
-            android:id="@+id/titleheader"
+            android:id="@+id/titleHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5.0dp"
@@ -98,6 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/username" />
+
         <EditText
             android:id="@+id/username"
             android:layout_width="400dp"
@@ -110,7 +108,7 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleheader" />
+            app:layout_constraintTop_toBottomOf="@id/titleHeader" />
 
         <EditText
             android:id="@+id/password"
@@ -128,9 +126,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/username" />
 
-
-
-
         <ImageButton
             android:id="@+id/passwordToggle"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -140,19 +135,6 @@
             app:layout_constraintEnd_toEndOf="@+id/password"
             app:layout_constraintTop_toTopOf="@+id/password"
             app:srcCompat="@drawable/view_password" />
-
-
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/passwordToggle"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/password"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/password"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/password"-->
-<!--            android:background="@color/white"-->
-<!--            app:srcCompat="@drawable/view_password"-->
-<!--            android:contentDescription="@string/toggle_todo" />-->
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submit"
@@ -168,6 +150,6 @@
             app:layout_constraintTop_toBottomOf="@id/password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

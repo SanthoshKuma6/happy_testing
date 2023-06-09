@@ -1,20 +1,20 @@
 package com.edu.happytesting.drawing
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
-import android.view.MotionEvent.TOOL_TYPE_STYLUS
 import android.view.View
-import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
     private lateinit var drawPaint: Paint

@@ -24,7 +24,7 @@ interface ApiInterface {
     suspend fun refreshingQuestionList(
         @Field("classId") classId: String,
         @Field("studentId") studentId: String
-    ): Response<List<RefresigExamDetails.RefresigExamDetailsItem>>
+    ): Response<List<RefreshingExamDetails.RefreshingExamDetailsItem>>
 
     @POST("uploadObjectiveAnswer.php")
 //    @POST("")

@@ -5,28 +5,21 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Base64
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.edu.happytestin.ExamlistAdapter
+import com.edu.happytesting.adapter.ExamListAdapter
 import com.edu.happytesting.R
 import com.edu.happytesting.api.Response
 import com.edu.happytesting.databinding.ActivityTablayoutBinding
@@ -43,30 +36,25 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 
 
-class TablayoutActivity : AppCompatActivity(), OnTabSelect {
-    private lateinit var tablayoutBinding: ActivityTablayoutBinding
+class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
+    private lateinit var tabLayoutBinding: ActivityTablayoutBinding
 
     private val questionList: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private val questionListTemp: ArrayList<QuestionList.QuestionListItem> = ArrayList()
 
-     var objectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
+     private var objectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private val subjectiveAnswer: ArrayList<QuestionList.QuestionListItem> = ArrayList()
     private lateinit var myReceiver: MyReceiver
 
     //total questions arraylist
     private val questionCount: ArrayList<QuestionList.QuestionListItem> = ArrayList()
 
-    var examlistAdapter: ExamlistAdapter? = null
+    var examListAdapter: ExamListAdapter? = null
     var newItem = 0
     var idType: Int? = 0
     private var correction: Boolean? = null
@@ -78,7 +66,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
     private var oCount = 0
     private var count = 0
     private var sCount = 0
-    private var writingBitmap: Bitmap? = null
     private var totalTimeCountInMilliseconds: Long = 0
     private var totalLeftTimeCountInMilliseconds: Long = 0
     private var timeBlinkInMilliseconds: Long = 0
@@ -88,7 +75,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-        tablayoutBinding = ActivityTablayoutBinding.inflate(layoutInflater)
+        tabLayoutBinding = ActivityTablayoutBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
         window.setFlags(
@@ -97,10 +84,10 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         )
 
         supportActionBar?.hide()
-        setContentView(tablayoutBinding.root)
+        setContentView(tabLayoutBinding.root)
         happyViewModel.questionListResponse.observe(this, questionListObserver)
 
-        happyViewModel.objectivesAnswer.observe(this, objetiveanswerObserver)
+        happyViewModel.objectivesAnswer.observe(this, objectiveAnswerObserver)
         happyViewModel.subjectiveAnswer.observe(this, subjectiveAnswerObserver)
 
         testId = intent.getStringExtra("testId").toString()
@@ -109,20 +96,26 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         numberOfQuestions = intent.getIntExtra("numberOfQuestions", 0)
         myReceiver = MyReceiver()
         apiCallQuestionList()
-        tablayoutBinding.submit.setOnClickListener {
+        tabLayoutBinding.submit.setOnClickListener {
             leftAnswers()
         }
     }
-    private val objetiveanswerObserver = Observer<Response<ObjectiveAnswer>> {
+    private val objectiveAnswerObserver = Observer<Response<ObjectiveAnswer>> {
         when (it) {
             is Response.Success -> {
                 finalResponse()
+                if (it.showLoader == true) {
+                    tabLayoutBinding.progress.visibility = View.VISIBLE
+                } else {
+                    tabLayoutBinding.progress.visibility = View.GONE
+                }
+
             }
             is Response.Loading -> {
                 if (it.showLoader == true) {
-                    tablayoutBinding.progress.visibility = View.VISIBLE
+                    tabLayoutBinding.progress.visibility = View.VISIBLE
                 } else {
-                    tablayoutBinding.progress.visibility = View.GONE
+                    tabLayoutBinding.progress.visibility = View.GONE
                 }
             }
             is Response.Error -> {
@@ -135,14 +128,20 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
     private val subjectiveAnswerObserver = Observer<Response<SubjectiveAnswer>> {
         when (it) {
             is Response.Success -> {
-                finalResponse()
+//                finalResponse()
+                if (it.showLoader == true) {
+                    tabLayoutBinding.progress.visibility = View.VISIBLE
+                } else {
+                    tabLayoutBinding.progress.visibility = View.GONE
+                }
+
 
             }
             is Response.Loading -> {
                 if (it.showLoader == true) {
-                    tablayoutBinding.progress.visibility = View.VISIBLE
+                    tabLayoutBinding.progress.visibility = View.VISIBLE
                 } else {
-                    tablayoutBinding.progress.visibility = View.GONE
+                    tabLayoutBinding.progress.visibility = View.GONE
                 }
 
             }
@@ -164,7 +163,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                     startTimer()
                 }
                 if (it.data!!.isEmpty()) {
-
                     MaterialAlertDialogBuilder(this)
                         .setCancelable(false)
                         .setMessage("There is No Questions Available")
@@ -176,22 +174,22 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
 
                 }
 
-                examlistAdapter = ExamlistAdapter(
+                examListAdapter = ExamListAdapter(
                     questionList,
-                    this@TablayoutActivity,
+                    this@TabLayoutActivity,
 //                    ::objectiveAnswer,
                     ::subjectiveAnswer, ::choiceQuestions, ::viewBitMap, this,
                 )
-                tablayoutBinding.viewPager.adapter = examlistAdapter
+                tabLayoutBinding.viewPager.adapter = examListAdapter
             }
 
             is Response.Error -> {}
             is Response.Loading -> {
                 if (it.showLoader == true) {
-                    tablayoutBinding.progress.visibility = View.VISIBLE
+                    tabLayoutBinding.progress.visibility = View.VISIBLE
 
                 } else {
-                    tablayoutBinding.progress.visibility = View.GONE
+                    tabLayoutBinding.progress.visibility = View.GONE
                 }
 
             }
@@ -218,30 +216,28 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
             )
 
     }
-
-    private fun subjectiveAnswer(bitmap: Bitmap, position: Int) {
-//        writingBitmap = bitmap
+    private fun subjectiveAnswer(bitmap: Bitmap) {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
         val encoded = Base64.encodeToString(byteArray, Base64.DEFAULT)
-        subjectiveAnswer[position] =
+        subjectiveAnswer[newItem] =
             QuestionList.QuestionListItem(
-                subjectiveAnswer[position].id,
-                subjectiveAnswer[position].mark,
-                subjectiveAnswer[position].name,
-                subjectiveAnswer[position].options,
-                subjectiveAnswer[position].type,
-                subjectiveAnswer[position].isAnswered,
-                subjectiveAnswer[position].chosenAnswer,
+                subjectiveAnswer[newItem].id,
+                subjectiveAnswer[newItem].mark,
+                subjectiveAnswer[newItem].name,
+                subjectiveAnswer[newItem].options,
+                subjectiveAnswer[newItem].type,
+                subjectiveAnswer[newItem].isAnswered,
+                subjectiveAnswer[newItem].chosenAnswer,
                 encoded,
             )
 
 
     }
 
-    private fun choiceQuestions(touchlistner: Boolean) {
-        correction = touchlistner
+    private fun choiceQuestions(touchListener: Boolean) {
+        correction = touchListener
         subjectiveAnswer[newItem] =
             QuestionList.QuestionListItem(
                 subjectiveAnswer[newItem].id,
@@ -258,10 +254,10 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
     override fun onResume() {
         super.onResume()
         newItem = 0
-        tablayoutBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+        tabLayoutBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 newItem = tab.position
-                examlistAdapter?.notifyDataSetChanged()
+                examListAdapter?.notifyDataSetChanged()
                 idType = questionList[newItem].type
             }
 
@@ -269,14 +265,14 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                examlistAdapter?.notifyDataSetChanged()
+                examListAdapter?.notifyDataSetChanged()
             }
         })
     }
 
     private fun tabLayoutView() {
-        val viewPager = tablayoutBinding.viewPager
-        val tabLayout = tablayoutBinding.tabLayout
+        val viewPager = tabLayoutBinding.viewPager
+        val tabLayout = tabLayoutBinding.tabLayout
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
 //        viewPager.isUserInputEnabled=false
         viewPager.adapter = adapter
@@ -295,11 +291,11 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
         val toolType = event?.getToolType(0)
         when (toolType) {
             MotionEvent.TOOL_TYPE_STYLUS -> {
-                tablayoutBinding.viewPager.isUserInputEnabled = false
+                tabLayoutBinding.viewPager.isUserInputEnabled = false
             }
 
             MotionEvent.TOOL_TYPE_FINGER -> {
-                tablayoutBinding.viewPager.isUserInputEnabled = true
+                tabLayoutBinding.viewPager.isUserInputEnabled = true
 
             }
 
@@ -311,7 +307,7 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
 
 
     private fun timerCreate() {
-        tablayoutBinding.duration.text = testDuration
+        tabLayoutBinding.duration.text = testDuration
         totalTimeCountInMilliseconds = (60 * Integer.valueOf(testDuration) * 1000).toLong()
         totalLeftTimeCountInMilliseconds = totalTimeCountInMilliseconds
         timeBlinkInMilliseconds = (30 * 1000).toLong()
@@ -324,9 +320,9 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                 val seconds = millisUntilFinished / 1000
                 totalLeftTimeCountInMilliseconds = millisUntilFinished
                 if (millisUntilFinished < timeBlinkInMilliseconds) {
-                    tablayoutBinding.duration.visibility = View.VISIBLE
+                    tabLayoutBinding.duration.visibility = View.VISIBLE
                 }
-                tablayoutBinding.duration.text = String.format(
+                tabLayoutBinding.duration.text = String.format(
                     "%02d:%02d:%02d", seconds / 3600, seconds % 3600 / 60,
                     seconds % 60
                 )
@@ -425,18 +421,18 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                         happyViewModel.putObjectiveAnswer(jsonObject)
                     }
                 } else {
-                    for (i in subjectiveAnswer) {
-                        if (i.type == 2) {
+                    for (sub in subjectiveAnswer) {
+                        if (sub.type == 2) {
                             val data1 = HappyPreference(this).getUserDetails()
                             val studentWritingDetails = JsonObject().apply {
                                 addProperty("studentId", data1["studentId"])
                                 addProperty("class_id", data1["class_id"])
                                 addProperty("testId", testId)
                                 addProperty("subjectId", subjectId)
-                                addProperty("questionId", i.id)
-                                addProperty("mark", i.mark)
-                                addProperty("isAnswered", i.isAnswered)
-                                addProperty("encodedAnswer", i.encodedAnswer)
+                                addProperty("questionId", sub.id)
+                                addProperty("mark", sub.mark)
+                                addProperty("isAnswered", sub.isAnswered)
+                                addProperty("encodedAnswer", sub.encodedAnswer)
                             }
 
                             lifecycleScope.launch {
@@ -449,7 +445,6 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                 }
             }
         }
-        val array=JSONArray()
         for (i in objectiveAnswer) {
             if (i.type != 2) {
                 val data1 = HappyPreference(this).getUserDetails()
@@ -474,18 +469,18 @@ class TablayoutActivity : AppCompatActivity(), OnTabSelect {
                 }
 
             } else {
-                for (i in subjectiveAnswer) {
-                    if (i.type == 2) {
+                for (sub in subjectiveAnswer) {
+                    if (sub.type == 2) {
                         val data1 = HappyPreference(this).getUserDetails()
                         val studentWritingDetails = JsonObject().apply {
                             addProperty("studentId", data1["studentId"])
                             addProperty("class_id", data1["class_id"])
                             addProperty("testId", testId)
                             addProperty("subjectId", subjectId)
-                            addProperty("questionId", i.id)
-                            addProperty("mark", i.mark)
-                            addProperty("isAnswered", i.isAnswered)
-                            addProperty("encodedAnswer", i.encodedAnswer)
+                            addProperty("questionId", sub.id)
+                            addProperty("mark", sub.mark)
+                            addProperty("isAnswered", sub.isAnswered)
+                            addProperty("encodedAnswer", sub.encodedAnswer)
                         }
 
                         lifecycleScope.launch {

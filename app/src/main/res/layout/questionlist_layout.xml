@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
-        android:id="@+id/firstcard"
+        android:id="@+id/firstCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="50"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/firstconstrain"
+            android:id="@+id/firstConstrain"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginStart="05dp"
@@ -25,17 +25,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/bookimage"
+                android:id="@+id/bookImage"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="07dp"
                 android:src="@drawable/writing"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/examtitle"
+                app:layout_constraintEnd_toStartOf="@id/examTitle"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/examtitle"
+                android:id="@+id/examTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -44,7 +44,7 @@
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/bookimage"
+                app:layout_constraintStart_toEndOf="@id/bookImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -53,8 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                app:layout_constraintStart_toEndOf="@id/bookimage"
-                app:layout_constraintTop_toBottomOf="@id/examtitle"
+                app:layout_constraintStart_toEndOf="@id/bookImage"
+                app:layout_constraintTop_toBottomOf="@id/examTitle"
                 />
 
             <TextView
@@ -65,11 +65,11 @@
                 android:textSize="15sp"
                 android:layout_marginStart="5dp"
                 app:layout_constraintStart_toEndOf="@id/count"
-                app:layout_constraintTop_toBottomOf="@id/examtitle" />
+                app:layout_constraintTop_toBottomOf="@id/examTitle" />
 
 
             <TextView
-                android:id="@+id/statusbtn"
+                android:id="@+id/statusBtn"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="22dp"
@@ -99,6 +99,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/firstcard" />
+        app:layout_constraintTop_toBottomOf="@id/firstCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@
         android:layout_height="100dp"
         android:src="@mipmap/androidicon"/>
     <TextView
-        android:id="@+id/slideleft"
+        android:id="@+id/slideLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -30,5 +30,24 @@
     <string name="answers_have_been_saved_successfully">answers have been saved successfully.</string>
     <string name="todo_submit_image">TODO</string>
     <string name="ok_submit">OK</string>
+    <string name="ooops">Ooops!</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="please_connect_the_internet_and_try_again">Please connect the internet and try again.</string>
+    <string name="retry">Retry</string>
+    <string name="no_question_paper_available">NO Question Paper Available</string>
+    <string name="it_seems_there_is_no_question_paper_available_notify_you">it seems there is no question paper available.Notify you</string>
+    <string name="once_a_question_becomes_available">once a question becomes available</string>
+    <string name="please_be_patient">Please Be Patient!</string>
+    <string name="your_paper_is_presently_undergoing_submission">Your Paper is presently undergoing submission</string>
+    <string name="no_question_paper_available_be_patient">NO Question Paper Available</string>
+    <string name="it_seems_there_is_no_question_paper_available_notify_you_bePatient">it seems there is no question paper available.Notify you</string>
+    <string name="once_a_question_becomes_available_bePatient">once a question becomes available</string>
+    <string name="swipe_up_to_add_page">Swipe up to\nAdd Page</string>
+    <string name="pencil_todo">Pencil</string>
+    <string name="eraser_todo">Eraser</string>
+    <string name="multi_color_todo">Color Pencil</string>
+    <string name="undo_button">Undo Button</string>
+    <string name="redo_button">Redo button</string>
+
 
 </resources>

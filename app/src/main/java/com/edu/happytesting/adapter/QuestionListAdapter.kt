@@ -6,27 +6,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edu.happytesting.databinding.QuestionlistLayoutBinding
-import com.edu.happytesting.dataclass.RefresigExamDetails
+import com.edu.happytesting.dataclass.RefreshingExamDetails
 
 class QuestionListAdapter(
-    private val Questions: ArrayList<RefresigExamDetails.RefresigExamDetailsItem>,
-    private var onClick: (value: RefresigExamDetails.RefresigExamDetailsItem) -> Unit
+    private val Questions: ArrayList<RefreshingExamDetails.RefreshingExamDetailsItem>,
+    private var onClick: (value: RefreshingExamDetails.RefreshingExamDetailsItem) -> Unit
 
 
 ) : RecyclerView.Adapter<QuestionListAdapter.QuestionViewHolder>() {
-    inner class QuestionViewHolder(var binding: QuestionlistLayoutBinding) :
+    inner class QuestionViewHolder(private var binding: QuestionlistLayoutBinding) :
         ViewHolder(binding.root) {
-        fun setView(data: RefresigExamDetails.RefresigExamDetailsItem) {
-            binding.examtitle.text = data.examName
+        fun setView(data: RefreshingExamDetails.RefreshingExamDetailsItem) {
+            binding.examTitle.text = data.examName
             binding.count.text = data.numberOfQuestions.toString()
-            binding.statusbtn.text = data.testStatus
+            binding.statusBtn.text = data.testStatus
 
             if (data.testStatus == "Pending")
 //            if (data.testStatus == "Completed")
             {
-                binding.statusbtn.setBackgroundColor(Color.parseColor("#FFA500"))
+                binding.statusBtn.setBackgroundColor(Color.parseColor("#FFA500"))
 
-                binding.firstcard.setOnClickListener { onClick(data) }
+                binding.firstCard.setOnClickListener { onClick(data) }
             }
         }
     }

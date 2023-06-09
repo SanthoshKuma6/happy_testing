@@ -1,5 +1,7 @@
 package com.edu.happytesting.activity
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
@@ -8,6 +10,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
@@ -30,16 +33,15 @@ class LoginActivity : BaseActivity(),OnClickListener {
     private lateinit var myReceiver: MyReceiver
 
     companion object {
-        val studentexamdata: ArrayList<StudentData.Data.ExamListItem> = ArrayList()
+        val studentExamList: ArrayList<StudentData.Data.ExamListItem> = ArrayList()
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(loginActivity.root)
-        loginActivity.submit.setOnClickListener {
-            validateLogin()
-        }
+        loginActivity.submit.setOnClickListener { validateLogin() }
+        loginActivity.parent.setOnClickListener { hideSoftKeyboard(this) }
         myReceiver= MyReceiver()
         loginActivity.username.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 //        loginActivity.password.inputType=InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
@@ -53,14 +55,10 @@ class LoginActivity : BaseActivity(),OnClickListener {
         when (it) {
             is Response.Success -> {
                 if (it.data?.studentData != null) {
-                    it.data.studentData
-                    val studentId = it.data.studentData
-                    val classId = it.data.studentData
-                    //save to companion object
-                    studentexamdata.addAll(it.data.studentData.examList)
+                    studentExamList.addAll(it.data.studentData.examList)
                     //save to shared preference
                     HappyPreference(context = this).saveUserData(
-                         studentId.studentId, classId.classId,
+                        it.data.studentData.studentId,it.data.studentData.classId
                     )
 //                if (it.data.studentData.classId == "1") {
                     //passing data to main activity
@@ -117,16 +115,21 @@ class LoginActivity : BaseActivity(),OnClickListener {
     override fun onBackPressed() {
         finishAffinity()
     }
-
     override fun onStart() {
         val intent=IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(myReceiver,intent)
         super.onStart()
     }
 
-
-
-
-
+    private fun hideSoftKeyboard(activity: Activity) {
+        val inputMethodManager: InputMethodManager =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (inputMethodManager.isAcceptingText) {
+            inputMethodManager.hideSoftInputFromWindow(
+                activity.currentFocus?.windowToken,
+                0
+            )
+        }
+    }
 
 }

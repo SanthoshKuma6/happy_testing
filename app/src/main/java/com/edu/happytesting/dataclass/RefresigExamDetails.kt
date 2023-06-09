@@ -1,10 +1,10 @@
 package com.edu.happytesting.dataclass
 
-data class RefresigExamDetails(
-	val refresigExamDetails: List<RefresigExamDetailsItem?>? = null
+data class RefreshingExamDetails(
+	val refresigExamDetails: List<RefreshingExamDetailsItem?>? = null
 )
 {
-	data class RefresigExamDetailsItem(
+	data class RefreshingExamDetailsItem(
 		val duration: Int? = null,
 		val testStatus: String? = null,
 		val examName: String? = null,

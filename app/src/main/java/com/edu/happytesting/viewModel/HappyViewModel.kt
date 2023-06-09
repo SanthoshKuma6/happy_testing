@@ -16,7 +16,6 @@ class HappyViewModel : ViewModel() {
     //repository contains the api call functions
     private val loginRepository by lazy { LoginRepository() }
 
-    //initialize the live data in viewmodel and will be accessed from activity
     val loginResponseLiveData by lazy { loginRepository.loginLiveData }
 
     //error handler liveData

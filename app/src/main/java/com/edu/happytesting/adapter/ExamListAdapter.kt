@@ -1,4 +1,4 @@
-package com.edu.happytestin
+package com.edu.happytesting.adapter
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import android.view.*
-import android.view.View.OnTouchListener
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -20,25 +19,23 @@ import com.github.dhaval2404.colorpicker.model.ColorShape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.nio.file.attribute.AclEntry.newBuilder
 
 
-class ExamlistAdapter(
+class ExamListAdapter(
     private val examData: ArrayList<QuestionList.QuestionListItem>,
     private val context: Context,
-    private var onclick1: (Bitmap, Int) -> Unit,
-    private var onclick2: (Boolean) -> Unit,
+    private var subjectiveAnswer: (Bitmap) -> Unit,
+    private var CountOFQuestions: (Boolean) -> Unit,
     private var bitMapView: (Bitmap) -> Unit,
     private var onTabSelect: OnTabSelect,
 ) :
-    RecyclerView.Adapter<ExamlistAdapter.ExamViewHolder>() {
-    var currentItem: QuestionList.QuestionListItem? = null
-    var value: Bitmap? = null
-    var touchCount: Int = 0
-    var correction: Boolean? = null
-    var choosedchoice = ""
+    RecyclerView.Adapter<ExamListAdapter.ExamViewHolder>() {
+   private var currentItem: QuestionList.QuestionListItem? = null
+   private var value: Bitmap? = null
+   private var touchCount: Int = 0
+    private var correction: Boolean? = null
 
-    inner class ExamViewHolder(var adapterQuestions: FragmentQuestionBinding) :
+    inner class ExamViewHolder(private var adapterQuestions: FragmentQuestionBinding) :
         ViewHolder(adapterQuestions.root) {
         @SuppressLint("ClickableViewAccessibility")
         fun setView(examList: QuestionList.QuestionListItem) {
@@ -47,61 +44,62 @@ class ExamlistAdapter(
             adapterQuestions.drawing.setBrushColor(Color.BLACK)
 
 
-            value?.let { onclick1(it, position) }
+            value?.let { subjectiveAnswer(it) }
             if (examList.type == 1) {
-                adapterQuestions.drawingcanvaparent.visibility = View.GONE
-                adapterQuestions.openchoicequestions.visibility = View.VISIBLE
+                adapterQuestions.drawingCanvasParent.visibility = View.GONE
+                adapterQuestions.openChoiceQuestions.visibility = View.VISIBLE
                 adapterQuestions.question1.text = examList.options?.get(0)
                 adapterQuestions.question2.text = examList.options?.get(1)
                 adapterQuestions.question3.text = examList.options?.get(2)
                 adapterQuestions.question4.text = examList.options?.get(3)
                 Log.d("Option", examList.options.toString())
             } else {
-                adapterQuestions.openchoicequestions.visibility = View.GONE
-                adapterQuestions.drawingcanvaparent.visibility = View.VISIBLE
+                adapterQuestions.openChoiceQuestions.visibility = View.GONE
+                adapterQuestions.drawingCanvasParent.visibility = View.VISIBLE
                 adapterQuestions.drawing.setSizeForBrush(3.toFloat())
                 adapterQuestions.drawing.setBrushColor(Color.BLACK)
                 try {
                     value?.let {
-                        examList.type?.let { it1 ->
-                            onclick1(
+                        examList.type?.let { _ ->
+                            subjectiveAnswer(
                                 it,
-                                position
+
                             )
                         }
                     }
                 } catch (e: NullPointerException) {
                     e.printStackTrace()
                 }
-                adapterQuestions.drawing.setOnTouchListener(OnTouchListener { _, event ->
+                adapterQuestions.drawing.setOnTouchListener { _, event ->
                     when (event.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            if (event.getToolType(0)==MotionEvent.TOOL_TYPE_STYLUS||event.getToolType(0)==MotionEvent.TOOL_TYPE_ERASER){
+                        MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN -> {
+                            if (event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS || event.getToolType(
+                                    0
+                                ) == MotionEvent.TOOL_TYPE_ERASER
+                            ) {
                                 adapterQuestions.scrollView.requestDisallowInterceptTouchEvent(true)
-                            }else{
+                                touchCount = 0
+                                touchCount++
+                                if (touchCount == 1) {
+                                    correction = true
+                                    CountOFQuestions(correction!!)
+                                }
+                            } else {
                                 adapterQuestions.scrollView.requestDisallowInterceptTouchEvent(false)
 
                             }
-                            touchCount = 0
-                            touchCount++
-                            if (touchCount == 1) {
-                                correction = true
-                                onclick2(correction!!)
-                            }
-                        }
-                        MotionEvent.ACTION_UP -> {
 
                         }
-                        MotionEvent.ACTION_MOVE -> {
 
-                        }
+                        MotionEvent.ACTION_UP,MotionEvent.ACTION_POINTER_UP -> {}
+                        MotionEvent.ACTION_MOVE -> {}
 
 
                     }
 
 
                     false
-                })
+                }
 
             }
 
@@ -129,7 +127,6 @@ class ExamlistAdapter(
             }
         }
 
-        //Canva Drawing design tool
         init {
 
 
@@ -141,11 +138,9 @@ class ExamlistAdapter(
                 adapterQuestions.drawing.onClickRedo()
 
             }
-            // write erser color
 
             adapterQuestions.erase.setOnClickListener {
                 val brushDialogue = Dialog(context)
-
                 brushDialogue.setContentView(R.layout.dialogue_eraser_size)
                 brushDialogue.setTitle("Choose Eraser Size: ")
                 brushDialogue.findViewById<ImageButton>(R.id.ersersmall)
@@ -178,9 +173,9 @@ class ExamlistAdapter(
             }
 
             //write brush color
-            adapterQuestions.brushcolor.setOnClickListener {
+            adapterQuestions.brushColor.setOnClickListener {
                 val brushDialogue = Dialog(context)
-                brushDialogue.setContentView(com.edu.happytesting.R.layout.dialogue_brush_size)
+                brushDialogue.setContentView(R.layout.dialogue_brush_size)
                 brushDialogue.setTitle("Choose Brush Size: ")
                 brushDialogue.findViewById<ImageButton>(R.id.ibSmall)
 
@@ -205,19 +200,19 @@ class ExamlistAdapter(
                 brushDialogue.show()
 
             }
-            //clor picker
+            //color picker
             adapterQuestions.multicolor.setOnClickListener {
                 ColorPickerDialog
                     .Builder(context)
                     .setTitle("Pick Color")
                     .setColorShape(ColorShape.SQAURE)
+                    .setDefaultColor(R.color.black)
                     .setColorListener { color, _ ->
                         adapterQuestions.drawing.setBrushColor(color)
-                        adapterQuestions.multicolor.setBackgroundColor(color)
                     }
                     .show()
-            }
 
+            }
 
             ///current bitmap
             val lifecycleScope = CoroutineScope(Dispatchers.Main)

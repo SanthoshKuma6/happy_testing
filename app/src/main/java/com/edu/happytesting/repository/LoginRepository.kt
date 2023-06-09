@@ -66,7 +66,7 @@ class LoginRepository {
 
 
     /**
-     * This function returns the message from the errorbody of the responseBody.
+     * This function returns the message from the error_body of the responseBody.
      */
     private fun getErrorBodyMessage(responseBody: ResponseBody): String {
         val errorJson = JSONObject(responseBody.string())

@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:id="@+id/refreshlayout"
+    android:id="@+id/refreshLayout"
     app:layout_constraintTop_toTopOf="parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -35,21 +35,21 @@
         <ImageView
             android:id="@+id/imageview"
             android:layout_width="match_parent"
-            android:layout_marginTop="70sp"
-            android:layout_height="500dp"
+            android:layout_marginTop="90sp"
+            android:layout_height="400dp"
             android:src="@drawable/pleasewaitstatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/refreshlayout"
+            app:layout_constraintTop_toBottomOf="@id/refreshLayout"
             app:layout_constraintTop_toTopOf="parent"/>
     <TextView
-        android:id="@+id/pleasewait"
+        android:id="@+id/pleaseWaitTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Be Patient!"
+        android:text="@string/please_be_patient"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,71 +61,59 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Your Paper is presently undergoing submission"
+        android:text="@string/your_paper_is_presently_undergoing_submission"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="20dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pleasewait"
+        app:layout_constraintTop_toBottomOf="@id/pleaseWaitTitle"
         android:visibility="visible"
         />
 
     <ImageView
         android:id="@+id/noquestions"
         android:layout_width="match_parent"
-        android:layout_marginTop="20sp"
-        android:layout_height="500dp"
+        android:layout_height="750dp"
         android:src="@drawable/no_question"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/refreshlayout"
+        app:layout_constraintTop_toBottomOf="@id/refreshLayout"
         app:layout_constraintTop_toTopOf="parent"/>
     <TextView
-        android:id="@+id/questiontitle"
+        android:id="@+id/questionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NO Question Paper Available"
+        android:text="@string/no_question_paper_available_be_patient"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/noquestions"
         android:visibility="gone"
         />
     <TextView
-        android:id="@+id/questionnotify"
+        android:id="@+id/questionNotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="it seems there is no question paper available.Notify you"
+        android:text="@string/it_seems_there_is_no_question_paper_available_notify_you_bePatient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questiontitle"
+        app:layout_constraintTop_toBottomOf="@id/questionTitle"
         android:visibility="gone"
         />
     <TextView
         android:id="@+id/notify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="once a question becomes available"
+        android:text="@string/once_a_question_becomes_available_bePatient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionnotify"
+        app:layout_constraintTop_toBottomOf="@id/questionNotify"
         android:visibility="gone"
         />
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/noData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:lottie_rawRes="@raw/nodata"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/notify"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

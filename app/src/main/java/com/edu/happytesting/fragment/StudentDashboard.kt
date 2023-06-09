@@ -3,7 +3,6 @@ package com.edu.happytesting.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.edu.happytesting.R
 import com.edu.happytesting.activity.LoginActivity
-import com.edu.happytesting.activity.TablayoutActivity
+import com.edu.happytesting.activity.TabLayoutActivity
 import com.edu.happytesting.adapter.QuestionListAdapter
 import com.edu.happytesting.api.Response
 import com.edu.happytesting.databinding.FragmentStudentDashboardBinding
-import com.edu.happytesting.dataclass.RefresigExamDetails
+import com.edu.happytesting.dataclass.RefreshingExamDetails
 import com.edu.happytesting.preference.HappyPreference
 import com.edu.happytesting.utils.showLog
 import com.edu.happytesting.viewModel.HappyViewModel
@@ -44,7 +42,7 @@ class StudentDashboard : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         studentDashboard.root
         super.onViewCreated(view, savedInstanceState)
-        LoginActivity.studentexamdata
+        LoginActivity.studentExamList
         happyViewModel.refreshingListData.observe(requireActivity(), refreshingObserver)
 
 
@@ -71,20 +69,20 @@ class StudentDashboard : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private val refreshingObserver =
-        Observer<Response<List<RefresigExamDetails.RefresigExamDetailsItem>>> {
+        Observer<Response<List<RefreshingExamDetails.RefreshingExamDetailsItem>>> {
             when (it) {
                 is Response.Loading -> {
                     if (it.showLoader == true) {
                         studentDashboard.progress.visibility = View.VISIBLE
                         studentDashboard.imageview.visibility = View.VISIBLE
                         studentDashboard.undergoing.visibility = View.VISIBLE
-                        studentDashboard.pleasewait.visibility = View.VISIBLE
+                        studentDashboard.pleaseWaitTitle.visibility = View.VISIBLE
 
                     } else {
                         studentDashboard.progress.visibility = View.GONE
                         studentDashboard.imageview.visibility = View.GONE
                         studentDashboard.undergoing.visibility = View.GONE
-                        studentDashboard.pleasewait.visibility = View.GONE
+                        studentDashboard.pleaseWaitTitle.visibility = View.GONE
                     }
 
                 }
@@ -94,11 +92,11 @@ class StudentDashboard : Fragment() {
                         LinearLayoutManager(requireContext())
                     adapter =
                         QuestionListAdapter(
-                            it.data as ArrayList<RefresigExamDetails.RefresigExamDetailsItem>,
+                            it.data as ArrayList<RefreshingExamDetails.RefreshingExamDetailsItem>,
                             ::pendingScreen
                         )
-                    studentDashboard.refreshlayout.setOnRefreshListener {
-                        studentDashboard.refreshlayout.isRefreshing = false
+                    studentDashboard.refreshLayout.setOnRefreshListener {
+                        studentDashboard.refreshLayout.isRefreshing = false
                         Collections.shuffle(it.data, Random(System.currentTimeMillis()))
                         apiCall()
                         adapter = QuestionListAdapter(it.data, ::pendingScreen)
@@ -107,17 +105,15 @@ class StudentDashboard : Fragment() {
                     }
                     studentDashboard.recyclerview.adapter = adapter
                     if (it.data.isEmpty()) {
-                        studentDashboard.noData.visibility = View.VISIBLE
                         studentDashboard.noquestions.visibility = View.VISIBLE
-                        studentDashboard.questionnotify.visibility = View.VISIBLE
+                        studentDashboard.questionNotify.visibility = View.VISIBLE
                         studentDashboard.notify.visibility = View.VISIBLE
-                        studentDashboard.questiontitle.visibility = View.VISIBLE
+                        studentDashboard.questionTitle.visibility = View.VISIBLE
                     } else {
-                        studentDashboard.noData.visibility = View.GONE
                         studentDashboard.noquestions.visibility = View.GONE
-                        studentDashboard.questionnotify.visibility = View.GONE
+                        studentDashboard.questionNotify.visibility = View.GONE
                         studentDashboard.notify.visibility = View.GONE
-                        studentDashboard.questiontitle.visibility = View.GONE
+                        studentDashboard.questionTitle.visibility = View.GONE
                     }
 
                 }
@@ -144,12 +140,12 @@ class StudentDashboard : Fragment() {
     }
 
 
-    private fun pendingScreen(questionListItem: RefresigExamDetails.RefresigExamDetailsItem) {
+    private fun pendingScreen(questionListItem: RefreshingExamDetails.RefreshingExamDetailsItem) {
         val testId = questionListItem.testId
         val subjectId = questionListItem.subjectId
         val duration = questionListItem.duration
         val totalQuestions = questionListItem.numberOfQuestions
-        val intent = Intent(requireContext(), TablayoutActivity::class.java)
+        val intent = Intent(requireContext(), TabLayoutActivity::class.java)
         intent.putExtra("testId", testId)
         intent.putExtra("subjectId", subjectId)
         intent.putExtra("duration", duration.toString())

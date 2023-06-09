@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/noquestions"
+        android:id="@+id/noQuestions"
         android:layout_width="match_parent"
         android:layout_marginTop="20sp"
         android:layout_height="250dp"
@@ -16,35 +16,35 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <TextView
-        android:id="@+id/questiontitle"
+        android:id="@+id/questionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NO Question Paper Available"
+        android:text="@string/no_question_paper_available"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/noquestions"
+        app:layout_constraintTop_toBottomOf="@id/noQuestions"
         android:visibility="visible"
         />
     <TextView
-        android:id="@+id/questionnotify"
+        android:id="@+id/questionNotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="it seems there is no question paper available.Notify you"
+        android:text="@string/it_seems_there_is_no_question_paper_available_notify_you"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questiontitle"
+        app:layout_constraintTop_toBottomOf="@id/questionTitle"
         android:visibility="visible"
         />
     <TextView
         android:id="@+id/notify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="once a question becomes available"
+        android:text="@string/once_a_question_becomes_available"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionnotify"
+        app:layout_constraintTop_toBottomOf="@id/questionNotify"
         android:visibility="visible"
         />
 

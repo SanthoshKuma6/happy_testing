@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:orientation="vertical">
-
-<!--        <com.airbnb.lottie.LottieAnimationView-->
-<!--            android:id="@+id/image_onboarding"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginStart="20dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginEnd="20dp"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            app:lottie_autoPlay="true"-->
-<!--            app:lottie_loop="true"-->
-<!--            app:lottie_rawRes="@raw/nointernetconnection" />-->
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,11 +17,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ooops! "
+            android:text="@string/ooops"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
 
         <TextView
@@ -44,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="No Internet Connection"
+            android:text="@string/no_internet_connection"
             android:textColor="@color/black"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Please connect the internet and try again."
+            android:text="@string/please_connect_the_internet_and_try_again"
            />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -61,9 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/tabcolor"
+            android:background="@color/tab_color"
             android:textColor="@color/white"
-            android:text="Retry"/>
+            android:text="@string/retry"/>
 
 
 

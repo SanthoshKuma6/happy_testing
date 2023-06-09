@@ -93,11 +93,14 @@ dependencies {
     implementation'com.github.Miihir79:DrawingCanvas:1.1.2'
     //colour picker
     implementation 'com.github.Dhaval2404:ColorPicker:2.3'
-
-    //lotti animation
-    implementation 'com.airbnb.android:lottie:5.2.0'
     //swipe refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //lotti
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+
 
 }
 
