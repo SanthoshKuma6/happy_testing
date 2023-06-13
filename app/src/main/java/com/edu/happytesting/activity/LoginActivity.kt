@@ -115,6 +115,7 @@ class LoginActivity : BaseActivity(),OnClickListener {
     override fun onBackPressed() {
         finishAffinity()
     }
+    @Suppress("DEPRECATION")
     override fun onStart() {
         val intent=IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(myReceiver,intent)

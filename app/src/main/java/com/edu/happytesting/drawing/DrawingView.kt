@@ -1,5 +1,6 @@
 package com.edu.happytesting.drawing
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -21,7 +22,8 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
     private lateinit var drawPath: CustomPath
     private var currentColor: Int = Color.BLACK
     private var currentBrushSize: Float = 0.toFloat()
-    private var currentEraserSize: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15f, resources.displayMetrics)
+    private var currentEraserSize: Float =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15f, resources.displayMetrics)
     private var currentXfermode: PorterDuffXfermode? = null
     private lateinit var canvasBitmap: Bitmap
     private lateinit var canvas: Canvas
@@ -87,6 +89,7 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     //! identify ker raha k kis kis path per touch kya user nai or wo path ko mention ker raha bus
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val touchX = event?.x
         val touchY = event?.y
@@ -125,6 +128,7 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
 
 
             }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
                 paths.add(drawPath)
                 undoPaths.clear()
@@ -138,6 +142,7 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
                 }
 
             }
+
             else -> return false
         }
         invalidate()
@@ -156,13 +161,14 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
 
     fun setBrushColor(color: Int) {
         currentColor = color
-        drawPaint!!.color = color
+        drawPaint.color = color
     }
 
 
     //! on Eraser select, sets paint tool to eraser
     fun onEraserSelect(size: Float) {
-        currentEraserSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, resources.displayMetrics)
+        currentEraserSize =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, resources.displayMetrics)
         currentXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
@@ -191,11 +197,11 @@ class DrawingView1(context: Context, attr: AttributeSet) : View(context, attr) {
         var brushThickness: Float,
         var xfermode: PorterDuffXfermode?,
         var eraserThickness: Float
-    ) : Path() {
+    ) : Path()
 
-    }
 
-    fun getBitmap(): Bitmap {
+
+    private fun getBitmap(): Bitmap {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         draw(canvas)

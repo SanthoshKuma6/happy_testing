@@ -14,6 +14,7 @@ import com.edu.happytesting.R
 import com.edu.happytesting.databinding.ActivitySplashBinding
 import com.edu.happytesting.preference.HappyPreference
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private val splashScreen by lazy { ActivitySplashBinding.inflate(layoutInflater) }
 

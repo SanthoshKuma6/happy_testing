@@ -20,9 +20,11 @@ class HappyPreference(context: Context) {
      */
     fun saveUserData( studentId: String,classId:String) {
         val editor = prefs.edit()
-        editor.putString(STUDENTID, studentId)
-        editor.putString(CLASSID,classId)
-        editor.apply()
+            editor.putString(STUDENTID, studentId)
+            editor.putString(CLASSID,classId)
+            editor.apply()
+
+
     }
 
     /**

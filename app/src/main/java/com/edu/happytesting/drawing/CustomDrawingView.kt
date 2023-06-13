@@ -1,5 +1,6 @@
 package com.edu.happytesting.drawing
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -103,6 +104,7 @@ class CustomDrawingView(context: Context, attrs: AttributeSet) : View(context, a
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y

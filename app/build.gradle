@@ -54,25 +54,25 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation 'androidx.fragment:fragment-ktx:1.6.0'
 
     //viewpager
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 //    implementation 'com.google.android.material:material:1.9.0-alpha02'
 
-    //nonswipe Viewpage
-    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
+    //nonSwipe Viewpage
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta02'
     //Mvvm LifeCycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-common:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation "androidx.activity:activity-ktx:1.7.1"
-    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation "androidx.fragment:fragment-ktx:1.6.0"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-   //recylerview
+   //recyclerView
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
 
 
@@ -97,8 +97,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //lotti
-    def lottieVersion = "3.4.0"
-    implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation "com.airbnb.android:lottie:5.2.0"
 
 
 

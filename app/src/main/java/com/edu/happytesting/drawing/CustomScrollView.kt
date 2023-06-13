@@ -1,5 +1,6 @@
 package com.edu.happytesting.drawing
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -55,6 +56,7 @@ class CustomScrollView(context: Context, attrs: AttributeSet) : ScrollView(conte
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         return isScrollingEnabled && super.onTouchEvent(ev)
     }

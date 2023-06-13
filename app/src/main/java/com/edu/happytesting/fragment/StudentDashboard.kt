@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedDispatcher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +23,8 @@ import com.edu.happytesting.preference.HappyPreference
 import com.edu.happytesting.utils.showLog
 import com.edu.happytesting.viewModel.HappyViewModel
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Collections
+import java.util.Random
 
 
 class StudentDashboard : Fragment() {
@@ -51,7 +54,6 @@ class StudentDashboard : Fragment() {
 
 
     }
-
     override fun onStart() {
         super.onStart()
         val data = HappyPreference(requireContext()).getUserDetails()
@@ -66,8 +68,7 @@ class StudentDashboard : Fragment() {
             }
         }
     }
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     private val refreshingObserver =
         Observer<Response<List<RefreshingExamDetails.RefreshingExamDetailsItem>>> {
             when (it) {
@@ -105,19 +106,18 @@ class StudentDashboard : Fragment() {
                     }
                     studentDashboard.recyclerview.adapter = adapter
                     if (it.data.isEmpty()) {
-                        studentDashboard.noquestions.visibility = View.VISIBLE
+                        studentDashboard.noQuestions.visibility = View.VISIBLE
                         studentDashboard.questionNotify.visibility = View.VISIBLE
                         studentDashboard.notify.visibility = View.VISIBLE
                         studentDashboard.questionTitle.visibility = View.VISIBLE
                     } else {
-                        studentDashboard.noquestions.visibility = View.GONE
+                        studentDashboard.noQuestions.visibility = View.GONE
                         studentDashboard.questionNotify.visibility = View.GONE
                         studentDashboard.notify.visibility = View.GONE
                         studentDashboard.questionTitle.visibility = View.GONE
                     }
 
                 }
-
                 is Response.Error -> {
                     showLog(it.errorMessage!!)
 
@@ -139,7 +139,6 @@ class StudentDashboard : Fragment() {
         }
     }
 
-
     private fun pendingScreen(questionListItem: RefreshingExamDetails.RefreshingExamDetailsItem) {
         val testId = questionListItem.testId
         val subjectId = questionListItem.subjectId
@@ -152,6 +151,8 @@ class StudentDashboard : Fragment() {
         intent.putExtra("numberOfQuestions", totalQuestions)
         startActivity(intent)
     }
+
+
 }
 
 

@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finishAffinity()
     }
+    @Suppress("DEPRECATION")
     override fun onStart() {
         val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(myReceiver, intentFilter)
