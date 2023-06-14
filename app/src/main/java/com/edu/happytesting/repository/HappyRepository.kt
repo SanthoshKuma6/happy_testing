@@ -1,5 +1,6 @@
 package com.edu.happytesting.repository
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.edu.happytesting.api.ApiInterface
@@ -61,7 +62,7 @@ class HappyRepository {
     }
 
     val refreshingData = MutableLiveData<Response<List<RefreshingExamDetails.RefreshingExamDetailsItem>>>()
-
+    @SuppressLint("SuspiciousIndentation")
     suspend fun getRefreshingData(classId: String, studentId: String) {
         if (NetworkUtils.isInternetAvailable(context = context)){
         refreshingData.value=Response.Loading(showLoader = true)
