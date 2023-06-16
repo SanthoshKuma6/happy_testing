@@ -10,9 +10,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.edu.happytesting.R
 import com.edu.happytesting.databinding.ActivityMainBinding
+import com.edu.happytesting.databinding.DialogeLogoutLayoutBinding
 import com.edu.happytesting.preference.HappyPreference
 import com.edu.happytesting.utils.MyReceiver
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,8 +43,7 @@ class MainActivity : AppCompatActivity() {
 
 
         mainActivity.logout.setOnClickListener {
-            HappyPreference(this).saveUserData("", "")
-            logoutAlert()
+logOut()
 
         }
 
@@ -72,22 +71,19 @@ class MainActivity : AppCompatActivity() {
 //    }
 
 
-    private fun logoutAlert(){
-        MaterialAlertDialogBuilder(this)
-            .setCancelable(false)
-            .setMessage("Are you sure want to exit?")
-            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                dialog.dismiss()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                this.let {
-                }
 
-            }.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
-                dialog.dismiss()
 
-            }
-            .show()
+    private fun logOut(){
+        val dialog= DialogeLogoutLayoutBinding.inflate(layoutInflater)
+        com.edu.happytesting.ui.dialog.AlertDialog().logOut(this,dialog)
+        dialog.logOutButton.setOnClickListener {
+            HappyPreference(this).saveUserData("", "")
+            val intent=Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
     }
 
     @Deprecated("Deprecated in Java", ReplaceWith("finishAffinity()"))

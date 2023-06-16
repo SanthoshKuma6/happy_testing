@@ -390,6 +390,7 @@ class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
         }
 
     }
+
     private fun answerSubmission() {
         MaterialAlertDialogBuilder(this)
             .setCancelable(false)
@@ -572,13 +573,13 @@ class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
                 .setPositiveButton("Yes") { dialog, _ ->
                     dialog.dismiss()
                     countDownTimer!!.cancel()
-                    finish()
+                    answerSubmission()
                 }
                 .setNegativeButton(
                     "No"
                 ) { dialog, _ -> dialog.dismiss() }.show()
         } else {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

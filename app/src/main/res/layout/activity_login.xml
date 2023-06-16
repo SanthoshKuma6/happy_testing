@@ -108,7 +108,10 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleHeader" />
+            app:layout_constraintTop_toBottomOf="@id/titleHeader"
+            android:autofillHints="username"
+            android:inputType="text"
+            />
 
         <EditText
             android:id="@+id/password"
@@ -124,7 +127,8 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username" />
+            app:layout_constraintTop_toBottomOf="@id/username"
+            />
 
         <ImageButton
             android:id="@+id/passwordToggle"
@@ -134,7 +138,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/password"
             app:layout_constraintEnd_toEndOf="@+id/password"
             app:layout_constraintTop_toTopOf="@+id/password"
-            app:srcCompat="@drawable/view_password" />
+            app:srcCompat="@drawable/view_password"
+            android:contentDescription="@string/show_password" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submit"
