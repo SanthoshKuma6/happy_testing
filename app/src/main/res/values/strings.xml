@@ -56,7 +56,6 @@
     <string name="size_70">Size 70</string>
     <string name="size_25">Size 25</string>
     <string name="show_password">showPassword</string>
-    <string name="logout_title">Logout</string>
     <string name="are_you_sure_want_to_nlogout">Are you sure want to \nLogout?</string>
     <string name="logout_button">Logout</string>
     <string name="cancel_text">Cancel</string>
