@@ -13,6 +13,7 @@ import com.edu.happytesting.databinding.ActivityMainBinding
 import com.edu.happytesting.databinding.DialogeLogoutLayoutBinding
 import com.edu.happytesting.preference.HappyPreference
 import com.edu.happytesting.utils.MyReceiver
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
 
         mainActivity.logout.setOnClickListener {
-logOut()
+logout()
 
         }
 
@@ -85,6 +86,26 @@ logOut()
 
 
     }
+
+
+    private fun logout() {
+        MaterialAlertDialogBuilder(this)
+            .setCancelable(false)
+            .setIcon(R.mipmap.happytesting)
+            .setMessage(R.string.are_you_sure_want_to_nlogout)
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                HappyPreference(this).saveUserData("","")
+                val intent=Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+
+            }.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+
+            }
+            .show()
+    }
+
 
     @Deprecated("Deprecated in Java", ReplaceWith("finishAffinity()"))
     override fun onBackPressed() {
