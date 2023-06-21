@@ -53,13 +53,14 @@
                         android:id="@+id/flDrawingContainer"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_margin="5dp"
+                        android:layout_weight="1"
                         android:padding="1dp"
                         app:layout_constraintBottom_toTopOf="@id/parentConstrain"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                         <LinearLayout
                             android:id="@+id/constrainLayout"
                             android:layout_width="match_parent"
@@ -172,39 +173,40 @@
                             android:id="@+id/swipeUp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10sp"
                             android:layout_marginEnd="10dp"
                             android:text="@string/swipe_up_to_add_page"
                             android:textColor="@color/tab_color"
-                            android:layout_marginStart="10sp"
                             android:textSize="19sp"
-                            app:layout_constraintStart_toEndOf="@id/drawingConstrain"
                             app:layout_constraintEnd_toStartOf="@id/scroll"
+                            app:layout_constraintStart_toEndOf="@id/drawingConstrain"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/scroll"
-                            android:layout_width="50dp"
-                            android:layout_height="80dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="5dp"
-                            android:scaleType="centerCrop"
-                            app:lottie_autoPlay="true"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:lottie_loop="true"
-                            app:layout_constraintStart_toEndOf="@id/swipeUp"
-                            app:lottie_rawRes="@raw/scrolldown" />
+                        <!--                        <com.airbnb.lottie.LottieAnimationView-->
+                        <!--                            android:id="@+id/scroll"-->
+                        <!--                            android:layout_width="50dp"-->
+                        <!--                            android:layout_height="80dp"-->
+                        <!--                            android:layout_centerHorizontal="true"-->
+                        <!--                            android:layout_gravity="center"-->
+                        <!--                            android:layout_marginEnd="5dp"-->
+                        <!--                            android:scaleType="centerCrop"-->
+                        <!--                            app:lottie_autoPlay="true"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                        <!--                            app:lottie_loop="true"-->
+                        <!--                            app:layout_constraintStart_toEndOf="@id/swipeUp"-->
+                        <!--                            app:lottie_rawRes="@raw/scrolldown" />-->
 
-                        <!--                        <ImageView-->
-<!--                            android:id="@+id/scroll"-->
-<!--                            android:layout_width="30dp"-->
-<!--                            android:layout_height="30dp"-->
-<!--                            android:layout_marginTop="10sp"-->
-<!--                            android:layout_marginEnd="15dp"-->
-<!--                            android:src="@drawable/down_arrow"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+                        <ImageView
+                            android:id="@+id/scroll"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="10sp"
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/down_arrow"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/swipeUp"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
