@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.*
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edu.happytesting.R
@@ -27,12 +28,12 @@ class ExamListAdapter(
     private var subjectiveAnswer: (Bitmap) -> Unit,
     private var CountOFQuestions: (Boolean) -> Unit,
     private var bitMapView: (Bitmap) -> Unit,
-    private var onTabSelect: OnTabSelect,
+    private var onTabSelect: OnTabSelect
 ) :
     RecyclerView.Adapter<ExamListAdapter.ExamViewHolder>() {
-   private var currentItem: QuestionList.QuestionListItem? = null
-   private var value: Bitmap? = null
-   private var touchCount: Int = 0
+    private var currentItem: QuestionList.QuestionListItem? = null
+    private var value: Bitmap? = null
+    private var touchCount: Int = 0
     private var correction: Boolean? = null
 
     inner class ExamViewHolder(private var adapterQuestions: FragmentQuestionBinding) :
@@ -42,7 +43,11 @@ class ExamListAdapter(
             adapterQuestions.question.text = examList.name
             adapterQuestions.drawing.setSizeForBrush(3.toFloat())
             adapterQuestions.drawing.setBrushColor(Color.BLACK)
-
+            adapterQuestions.brushColor.setBackgroundColor(Color.WHITE)
+            adapterQuestions.erase.setBackgroundColor(Color.WHITE)
+            adapterQuestions.btnUndo.setBackgroundColor(Color.WHITE)
+            adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
+            adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
 
             value?.let { subjectiveAnswer(it) }
             if (examList.type == 1) {
@@ -64,7 +69,7 @@ class ExamListAdapter(
                             subjectiveAnswer(
                                 it,
 
-                            )
+                                )
                         }
                     }
                 } catch (e: NullPointerException) {
@@ -72,7 +77,7 @@ class ExamListAdapter(
                 }
                 adapterQuestions.drawing.setOnTouchListener { _, event ->
                     when (event.action) {
-                        MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN -> {
+                        MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                             if (event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS || event.getToolType(
                                     0
                                 ) == MotionEvent.TOOL_TYPE_ERASER
@@ -91,7 +96,7 @@ class ExamListAdapter(
 
                         }
 
-                        MotionEvent.ACTION_UP,MotionEvent.ACTION_POINTER_UP -> {}
+                        MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {}
                         MotionEvent.ACTION_MOVE -> {}
 
 
@@ -131,15 +136,31 @@ class ExamListAdapter(
 
 
             adapterQuestions.btnUndo.setOnClickListener {
+                adapterQuestions.brushColor.setBackgroundColor(Color.WHITE)
+                adapterQuestions.erase.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnUndo.setBackgroundColor(Color.parseColor("#6D75FC"))
+                adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
                 adapterQuestions.drawing.onClickUndo()
 
             }
             adapterQuestions.btnRedo.setOnClickListener {
+                adapterQuestions.brushColor.setBackgroundColor(Color.WHITE)
+                adapterQuestions.erase.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnUndo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnRedo.setBackgroundColor(Color.parseColor("#6D75FC"))
+                adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
                 adapterQuestions.drawing.onClickRedo()
 
             }
 
+
             adapterQuestions.erase.setOnClickListener {
+                adapterQuestions.brushColor.setBackgroundColor(Color.WHITE)
+                adapterQuestions.erase.setBackgroundColor(Color.parseColor("#6D75FC"))
+                adapterQuestions.btnUndo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
                 val brushDialogue = Dialog(context)
                 brushDialogue.setContentView(R.layout.dialogue_eraser_size)
                 brushDialogue.setTitle("Choose Eraser Size: ")
@@ -151,20 +172,17 @@ class ExamListAdapter(
                 brushDialogue.findViewById<ImageButton>(R.id.eraserMedium)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(25.toFloat())
-
                         brushDialogue.dismiss()
                     }
                 brushDialogue.findViewById<ImageButton>(R.id.eraserLarge)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(40.toFloat())
-
                         brushDialogue.dismiss()
                     }
 
                 brushDialogue.findViewById<ImageButton>(R.id.eraserExtraLarge)
                     .setOnClickListener {
                         adapterQuestions.drawing.onEraserSelect(70.toFloat())
-
                         brushDialogue.dismiss()
                     }
 
@@ -174,11 +192,15 @@ class ExamListAdapter(
 
             //write brush color
             adapterQuestions.brushColor.setOnClickListener {
+                adapterQuestions.brushColor.setBackgroundColor(Color.parseColor("#6D75FC"))
+                adapterQuestions.erase.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnUndo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
                 val brushDialogue = Dialog(context)
                 brushDialogue.setContentView(R.layout.dialogue_brush_size)
                 brushDialogue.setTitle("Choose Brush Size: ")
                 brushDialogue.findViewById<ImageButton>(R.id.ibSmall)
-
                     .setOnClickListener {
                         adapterQuestions.drawing.setSizeForBrush(3.toFloat())
                         adapterQuestions.drawing.setBrushColor(Color.BLACK)
@@ -202,6 +224,11 @@ class ExamListAdapter(
             }
             //color picker
             adapterQuestions.multicolor.setOnClickListener {
+                adapterQuestions.brushColor.setBackgroundColor(Color.WHITE)
+                adapterQuestions.erase.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnUndo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
+                adapterQuestions.multicolor.setBackgroundColor(Color.parseColor("#6D75FC"))
                 ColorPickerDialog
                     .Builder(context)
                     .setTitle("Pick Color")
@@ -223,6 +250,7 @@ class ExamListAdapter(
             }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val examListLayoutBinding =

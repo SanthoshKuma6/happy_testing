@@ -38,8 +38,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -86,6 +84,7 @@ class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
+
         supportActionBar?.hide()
         setContentView(tabLayoutBinding.root)
         happyViewModel.questionListResponse.observe(this, questionListObserver)
@@ -102,7 +101,10 @@ class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
         tabLayoutBinding.submit.setOnClickListener {
             leftAnswers()
         }
+
     }
+
+
 
     private val objectiveAnswerObserver = Observer<Response<ObjectiveAnswer>> {
         when (it) {
@@ -610,6 +612,7 @@ class TabLayoutActivity : AppCompatActivity(), OnTabSelect {
         }!!
 
     }
+
 }
 
 interface OnTabSelect {
