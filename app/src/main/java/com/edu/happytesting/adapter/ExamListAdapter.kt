@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.*
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -198,10 +199,12 @@ class ExamListAdapter(
                 adapterQuestions.btnRedo.setBackgroundColor(Color.WHITE)
                 adapterQuestions.multicolor.setBackgroundColor(Color.WHITE)
                 val brushDialogue = Dialog(context)
+
                 brushDialogue.setContentView(R.layout.dialogue_brush_size)
                 brushDialogue.setTitle("Choose Brush Size: ")
                 brushDialogue.findViewById<ImageButton>(R.id.ibSmall)
                     .setOnClickListener {
+                        Toast.makeText(context,"ibSmall",Toast.LENGTH_SHORT).show()
                         adapterQuestions.drawing.setSizeForBrush(3.toFloat())
                         adapterQuestions.drawing.setBrushColor(Color.BLACK)
                         brushDialogue.dismiss()

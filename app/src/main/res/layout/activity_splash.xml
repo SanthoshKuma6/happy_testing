@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:src="@mipmap/androidicon"/>
+        android:src="@mipmap/android_icon"/>
     <TextView
         android:id="@+id/slideLeft"
         android:layout_width="match_parent"
